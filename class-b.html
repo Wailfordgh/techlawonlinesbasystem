@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Class B - Mampong MTTC Practice Primary</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(245, 245, 245, 0.7);
+      z-index: -1;
+    }
+    
+    .navbar {
+      background-color: rgba(1, 1, 32, 0.9);
+      padding: 1rem 0;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+      position: sticky;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 0.7rem 0;
+      background-color: rgba(1, 1, 32, 0.95);
+    }
+    
+    .container {
+      width: 85%;
+      margin: 0 auto;
+    }
+    
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+    
+    .navbar-logo img {
+      height: 3.7rem;
+      margin-right: 1rem;
+      border-radius: 50%;
+      border: 2px solid #dfd00a;
+      transition: transform 0.3s;
+    }
+    
+    .navbar-logo img:hover {
+      transform: scale(1.05);
+    }
+    
+    .navbar-caption {
+      color: #dfd00a;
+      font-weight: 500;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    .navbar-collapse {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin-left: auto;
+    }
+    
+    .nav-item {
+      margin-left: 1.5rem;
+      position: relative;
+    }
+    
+    .nav-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #dfd00a;
+      transition: width 0.3s;
+    }
+    
+    .nav-link:hover {
+      color: #dfd00a;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+    
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: #ffffff;
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    .header {
+      padding: 10rem 0 5rem;
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+    
+    .card {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      padding: 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+      transition: transform 0.3s;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #01011f;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    }
+    
+    .btn-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .btn-secondary-outline {
+      background-color: transparent;
+      color: #01011f;
+      border: 2px solid #01011f;
+    }
+    
+    .btn-secondary-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: #01011f;
+      transition: all 0.3s;
+      z-index: -1;
+    }
+    
+    .btn-secondary-outline:hover {
+      color: #dfd00a;
+    }
+    
+    .btn-secondary-outline:hover::before {
+      width: 100%;
+    }
+    
+    .footer {
+      background-color: rgba(1, 1, 32, 0.9);
+      padding: 3rem 0;
+      color: white;
+      text-align: center;
+      position: relative;
+      margin-top: 5rem;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -25px;
+      left: 0;
+      width: 100%;
+      height: 25px;
+      background-image: linear-gradient(135deg, transparent 25%, rgba(1, 1, 32, 0.9) 25%, rgba(1, 1, 32, 0.9) 50%, transparent 50%, transparent 75%, rgba(1, 1, 32, 0.9) 75%);
+      background-size: 30px 30px;
+    }
+    
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-info, .footer-links, .footer-contact {
+      flex: 1;
+      min-width: 200px;
+      padding: 1rem;
+    }
+    
+    .footer-title {
+      color: #dfd00a;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: #dfd00a;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: #dfd00a;
+    }
+    
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      background-color: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+    
+    .social-icon:hover {
+      background-color: #dfd00a;
+      transform: translateY(-3px);
+    }
+    
+    .footer-bottom {
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .footer-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    @media (max-width: 992px) {
+      .navbar-collapse {
+        position: fixed;
+        top: 72px;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: rgba(1, 1, 32, 0.95);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+      
+      .navbar-collapse.active {
+        left: 0;
+      }
+      
+      .navbar-nav {
+        flex-direction: column;
+        margin-top: 1rem;
+        width: 100%;
+      }
+      
+      .nav-item {
+        margin: 0.8rem 0;
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .nav-link {
+        display: block;
+        padding: 0.5rem 0;
+      }
+      
+      .hamburger {
+        display: block;
+        margin-left: auto;
+        z-index: 1001;
+      }
+      
+      .btn-section {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 80%;
+        text-align: center;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .footer-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+      .card {
+        padding: 2rem;
+      }
+      
+      .card-title {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container navbar-collapse">
+      <div class="navbar-brand">
+        <div class="navbar-logo">
+          <a href="index.html">
+            <img src="logo.png" alt="School logo">
+          </a>
+        </div>
+        <div class="navbar-caption">
+          <a class="navbar-caption">Mampong MTTC Practice Primary</a>
+        </div>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="class-a.html">Class A</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="class-b.html">Class B</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="class-c.html">Class C</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="class-d.html">Class D</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="header">
+    <div class="container">
+      <div class="row">
+        <div class="card">
+          <h1 class="card-title">Welcome to Class B</h1>
+          <div class="btn-section">
+            <a class="btn btn-secondary-outline" href="https://script.google.com/macros/s/AKfycbxLLRNWmzhDGpO_mo3k0xzlIQTw1PuvleI-wj-6T2T-6XP9NjZ0imxq88PuPHABjTC5/exec">Add Student</a>
+            <a class="btn btn-secondary-outline" href="https://script.google.com/macros/s/AKfycbx4NLM-3XyIfOsQWJKRF6_2mZrNUHjiqgdSC5oCIoaxnzvAMfiepavJCkqF5qH247Py/exec">Enter Scores</a>
+            <a class="btn btn-secondary-outline" href="https://script.google.com/macros/s/AKfycbymweqLu961FK1fAKgBqimXQZa6DpGW8YKTOoku2NmTBfMStD3sFsfH5e2m9KaamVd0/exec">Students Report</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <h3 class="footer-title">About Us</h3>
+          <p>Mampong MTTC Practice Primary is dedicated to providing quality education and nurturing the talents of young minds.</p>
+        </div>
+        <div class="footer-links">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3 class="footer-title">Contact Us</h3>
+          <p>123 Education Street</p>
+          <p>Learningville, ED 54321</p>
+          <p>info@communityschool.edu</p>
+          <div class="footer-social">
+            <a href="#" class="social-icon">F</a>
+            <a href="#" class="social-icon">T</a>
+            <a href="#" class="social-icon">I</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-text">
+          © Copyright 2025 Mampong MTTC Practice Primary - All Rights Reserved
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle mobile menu
+    const hamburger = document.querySelector('.hamburger');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    hamburger.addEventListener('click', function() {
+      this.classList.toggle('active');
+      navbarCollapse.classList.toggle('active');
+    });
+    
+    // Change navbar on scroll
+    window.addEventListener('scroll', function() {const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Button hover effects
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+      button.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+    
+    // Add animation to card when visible
+    const card = document.querySelector('.card');
+    
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    });
+    
+    card.style.opacity = 0;
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    
+    observer.observe(card);
+  </script>
+</body>
+</html>
